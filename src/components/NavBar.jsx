@@ -36,7 +36,7 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar position="static" style={{ background: "#2E3B55" }}>
+    <AppBar position="static" sx={{ background: "#2E3B55" }} style={{}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -46,7 +46,6 @@ const NavBar = () => {
             href="/home"
             sx={{
               display: { xs: "none", md: "flex" },
-              mr: 2,
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
