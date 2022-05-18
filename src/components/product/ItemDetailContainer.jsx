@@ -11,6 +11,7 @@ export default function ItemDetailContainer() {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const onAdd = (cantidad) => alert(`Sumando ${cantidad} al carrito`);
 
   const fetchItem = (items, id) => {
     const traerItem = new Promise((res, rej) => {
@@ -71,7 +72,7 @@ export default function ItemDetailContainer() {
           <CircularProgress color="inherit" />
         </Backdrop>
       )}
-      {item && <ItemDetail item={item} />}
+      {item && <ItemDetail item={item} onAdd={onAdd} />}
     </div>
   );
 }

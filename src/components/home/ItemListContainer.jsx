@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-/* import ItemCount from "./ItemCount"; */
+
 import ItemList from "./ItemList";
 import LinearProgress from "@mui/material/LinearProgress";
 import { listaItems } from "../../db/listaItems";
 
 export default function ItemListContainer(/* { greeting } */) {
-  /* const onAdd = (cantidad) => alert(`Sumando ${cantidad} al carrito`); */
+  /* 
   const [listado, setListado] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -61,7 +61,7 @@ export default function ItemListContainer(/* { greeting } */) {
   return (
     <div>
       {/* Hola {greeting} */}
-      {/* <ItemCount stock={10} initial={1} onAdd={onAdd} />; */}
+
       {loading && (
         <Box sx={{ width: "100%" }}>
           <LinearProgress />

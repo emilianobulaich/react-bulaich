@@ -4,18 +4,19 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
+/* import CardActions from "@mui/material/CardActions"; */
+
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-export default function ItemDetail({ item }) {
+import ItemCount from "./ItemCount";
+export default function ItemDetail({ item, onAdd }) {
   return (
     <>
       <Box
         sx={{
           width: "60%",
           m: "0 auto",
-          mt: "10px",
+          mt: "20px",
           boxShadow: 5,
           borderRadius: 2,
         }}
@@ -31,7 +32,7 @@ export default function ItemDetail({ item }) {
             alt="Auto"
             height="auto"
             image={item.pictureUrl}
-            sx={{ width: "60%" }}
+            sx={{ width: "50%" }}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
@@ -43,7 +44,8 @@ export default function ItemDetail({ item }) {
           </CardContent>
           <Divider orientation="vertical" flexItem />
           <Divider />
-          <CardActions
+          <ItemCount initial={1} stock={10} onAdd={onAdd} />
+          {/* <CardActions
             sx={{
               width: "100%",
               m: "0 auto !important",
@@ -53,7 +55,7 @@ export default function ItemDetail({ item }) {
               alignItems: "center !important",
             }}
           >
-            <Button size="large" variant="contained" sx={{ width: "90%" }}>
+            {<Button size="large" variant="contained" sx={{ width: "90%" }}>
               Comprar ahora
             </Button>
             <Button
@@ -67,8 +69,8 @@ export default function ItemDetail({ item }) {
               }}
             >
               Añadir al carrito
-            </Button>
-          </CardActions>
+            </Button>}
+          </CardActions> */}
         </Card>
         <Typography variant="body2" color="text.secondary" p="2rem">
           <h1>Descripción</h1>
