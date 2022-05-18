@@ -5,7 +5,7 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 
 import { useState } from "react";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 
 export default function ItemCount({ stock, initial, onAdd }) {
   const [cantidad, setCantidad] = useState(initial);

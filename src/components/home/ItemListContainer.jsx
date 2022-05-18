@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
+import { Alert, Stack, Box } from "@mui/material/Alert";
 
 import ItemList from "./ItemList";
 import LinearProgress from "@mui/material/LinearProgress";

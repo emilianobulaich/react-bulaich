@@ -1,13 +1,15 @@
 import React from "react";
 import "@fontsource/roboto/300.css";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-/* import CardActions from "@mui/material/CardActions"; */
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Divider,
+  Grid,
+} from "@mui/material";
 
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
 import ItemCount from "./ItemCount";
 export default function ItemDetail({ item, onAdd }) {
   return (
@@ -27,55 +29,54 @@ export default function ItemDetail({ item, onAdd }) {
             display: { xs: "block", lg: "flex" },
           }}
         >
-          <CardMedia
-            component="img"
-            alt="Auto"
-            height="auto"
-            image={item.pictureUrl}
-            sx={{ width: "50%" }}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {item.title}
-            </Typography>
-            <Typography variant="h4" color="text.primary">
-              {item.price}
-            </Typography>
-          </CardContent>
+          <Box width="100%">
+            <CardMedia
+              component="img"
+              alt="Auto"
+              height="auto"
+              image={item.pictureUrl}
+            />
+          </Box>
           <Divider orientation="vertical" flexItem />
-          <Divider />
-          <ItemCount initial={1} stock={10} onAdd={onAdd} />
-          {/* <CardActions
+
+          <CardContent
             sx={{
-              width: "100%",
-              m: "0 auto !important",
-              display: "flex !important",
-              flexDirection: "column !important",
-              justifyContent: "center !important",
-              alignItems: "center !important",
+              m: "0 auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
             }}
           >
-            {<Button size="large" variant="contained" sx={{ width: "90%" }}>
-              Comprar ahora
-            </Button>
-            <Button
-              size="large"
-              variant="text"
-              sx={{
-                backgroundColor: "#D6EAF9",
-                m: "0 auto !important",
-                mt: "10px !important",
-                width: "90%",
-              }}
-            >
-              Añadir al carrito
-            </Button>}
-          </CardActions> */}
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                  color="text.primary"
+                >
+                  {item.title}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} mb="2rem">
+                <Typography variant="h5" color="#1976d2">
+                  Precio: {item.price}
+                </Typography>
+              </Grid>
+
+              <ItemCount initial={1} stock={10} onAdd={onAdd} />
+            </Grid>
+          </CardContent>
         </Card>
-        <Typography variant="body2" color="text.secondary" p="2rem">
-          <h1>Descripción</h1>
-          {item.description}
-        </Typography>
+        <Box p="2rem">
+          <Typography variant="h4" color="text.primary" pb="1rem">
+            Descripción
+          </Typography>
+
+          <Typography variant="body1" color="text.secondary">
+            {item.description}
+          </Typography>
+        </Box>
       </Box>
     </>
   );

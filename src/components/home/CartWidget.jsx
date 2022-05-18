@@ -1,8 +1,8 @@
 import React from "react";
+
+import { Badge, Box, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import Badge from "@mui/material/Badge";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
+
 export default function CartWidget() {
   return (
     <>

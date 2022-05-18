@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Alert, Stack, Backdrop, CircularProgress } from "@mui/material";
 
 import { listaItems } from "../../db/listaItems";
 import ItemDetail from "./ItemDetail";

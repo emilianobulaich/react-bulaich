@@ -1,10 +1,13 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  CardActions,
+  Button,
+  Typography,
+} from "@mui/material";
+
 export default function Item({ item }) {
   return (
     <Card
