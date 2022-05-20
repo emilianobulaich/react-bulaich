@@ -1,4 +1,6 @@
+//@ts-check
 import React from "react";
+import { NavLink } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -13,7 +15,7 @@ export default function Item({ item }) {
     <Card
       variant="outlined"
       sx={{
-        maxWidth: 390,
+        maxWidth: 350,
         m: 3,
         boxShadow: 5,
         textAlign: "center",
@@ -23,23 +25,28 @@ export default function Item({ item }) {
       <CardMedia
         component="img"
         alt="Auto"
-        height="240"
+        height="300"
         image={item.pictureUrl}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {item.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.description}
-        </Typography>
-        <Typography variant="body2" color="text.primary">
+        <Typography variant="h5" color="#1976d2" mt="10px">
           Precio: {item.price}
         </Typography>
       </CardContent>
       <CardActions>
         <Button size="large" variant="outlined" fullWidth>
-          Ver detalle del producto
+          <NavLink
+            to={`/item/${item.id}`}
+            style={() => ({
+              color: "#1976d2",
+              textDecoration: "none",
+            })}
+          >
+            Ver detalle del producto
+          </NavLink>
         </Button>
       </CardActions>
     </Card>

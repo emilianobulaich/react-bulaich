@@ -1,3 +1,4 @@
+//@ts-check
 import React from "react";
 import Item from "./Item";
 import Grid from "@mui/material/Grid";

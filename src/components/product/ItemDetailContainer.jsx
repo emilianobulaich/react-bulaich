@@ -1,14 +1,20 @@
+//@ts-check
 import React, { useState, useEffect } from "react";
 import { Alert, Stack, Backdrop, CircularProgress } from "@mui/material";
 
-import { listaItems } from "../../db/listaItems";
+/* import { listaProcesadores, listaGabinetes } from "../../db/listaProcesadores"; */
 import ItemDetail from "./ItemDetail";
+import { useParams } from "react-router-dom";
+import { listaItems } from "../../db/listaItems";
 
 export default function ItemDetailContainer() {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
+
   const onAdd = (cantidad) => alert(`Sumando ${cantidad} al carrito`);
+
+  const { id } = useParams();
 
   const fetchItem = (items, id) => {
     const traerItem = new Promise((res, rej) => {
@@ -16,7 +22,7 @@ export default function ItemDetailContainer() {
       setError(false);
       setTimeout(() => {
         if (items.length > 0) {
-          let newItem = items.find((item) => item.id === id);
+          let newItem = items.find((item) => item.id === parseInt(id));
           if (newItem) {
             res(newItem);
           } else {
@@ -30,11 +36,9 @@ export default function ItemDetailContainer() {
 
     traerItem
       .then((res) => {
-        /* console.log(res); */
         setItem(res);
       })
       .catch((err) => {
-        /* console.log("Error al cargar el item"); */
         setError(err);
       })
       .finally(() => {
@@ -43,11 +47,8 @@ export default function ItemDetailContainer() {
   };
 
   useEffect(() => {
-    /* console.log(listaItems); */
-
-    //Por ahora se hardcodea el id a ir a buscar
-    fetchItem(listaItems, 1);
-  }, []);
+    fetchItem(listaItems, id);
+  }, [id]);
 
   if (error) {
     return (

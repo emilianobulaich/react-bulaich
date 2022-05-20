@@ -1,48 +1,51 @@
+//@ts-check
 import React, { useState, useEffect } from "react";
-import { Alert, Stack, Box } from "@mui/material/Alert";
-
+import { Alert, Stack } from "@mui/material";
+import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
-import LinearProgress from "@mui/material/LinearProgress";
+import { Backdrop, CircularProgress } from "@mui/material";
 import { listaItems } from "../../db/listaItems";
 
 export default function ItemListContainer(/* { greeting } */) {
-  /* 
-  const [listado, setListado] = useState(false);
+  const [listado, setListado] = useState();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
 
+  const { categoryId } = useParams();
+  /* 
   /* 
   Para probar que pasa al pasarle una lista vacía como parametro a la funcion "fetchListado"
-
-  const listaFalsa = [];
+    const listaFalsa = [];
 */
 
-  const fetchListado = (listado) => {
-    const traerListado = new Promise((res, rej) => {
-      setLoading(true);
-      setError(false);
-      setTimeout(() => {
-        if (listado.length > 0) {
-          res(listado);
-        } else {
-          rej("No se pudieron cargar los productos");
-        }
-      }, 2000);
-    });
-
-    traerListado
-      .then((res) => {
-        setListado(res);
-      })
-      .catch((err) => setError(err))
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
   useEffect(() => {
+    const fetchListado = (listado) => {
+      const traerListado = new Promise((res, rej) => {
+        setLoading(true);
+        setError(false);
+        setTimeout(() => {
+          if (categoryId) {
+            listado = listado.filter((lista) => lista.category === categoryId);
+          }
+          if (listado.length > 0) {
+            res(listado);
+          } else {
+            rej("No se pudieron cargar los productos");
+          }
+        }, 2000);
+      });
+
+      traerListado
+        .then((res) => {
+          setListado(res);
+        })
+        .catch((err) => setError(err))
+        .finally(() => {
+          setLoading(false);
+        });
+    };
     fetchListado(listaItems);
-  }, []);
+  }, [categoryId]);
 
   if (error) {
     return (
@@ -59,13 +62,19 @@ export default function ItemListContainer(/* { greeting } */) {
   return (
     <div>
       {/* Hola {greeting} */}
-
       {loading && (
-        <Box sx={{ width: "100%" }}>
-          <LinearProgress />
-        </Box>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={loading}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       )}
-      {listado && <ItemList items={listaItems} />}
+      {listado && (
+        <>
+          <ItemList items={listado} />
+        </>
+      )}
     </div>
   );
 }

@@ -1,4 +1,6 @@
+//@ts-check
 import * as React from "react";
+import { NavLink } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -16,7 +18,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import CartWidget from "./CartWidget";
 
-const pages = ["Vehículos", "Electrónica", "Libros"];
 const settings = ["Perfil", "Cuenta", "Salir"];
 
 const NavBar = () => {
@@ -39,14 +40,12 @@ const NavBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ background: "#2E3B55" }} style={{}}>
+    <AppBar position="static" sx={{ background: "#232323" }} style={{}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
-            variant="h6"
+            variant="h4"
             noWrap
-            component="a"
-            href="/home"
             sx={{
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
@@ -56,7 +55,15 @@ const NavBar = () => {
               textDecoration: "none",
             }}
           >
-            ZONO!
+            <NavLink
+              to="/"
+              style={() => ({
+                color: "#fff",
+                textDecoration: "none",
+              })}
+            >
+              ZONO!
+            </NavLink>
           </Typography>
 
           <Box
@@ -93,19 +100,45 @@ const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <NavLink
+                  to="/category/procesador"
+                  style={() => ({
+                    color: "#000",
+                    textDecoration: "none",
+                  })}
+                >
+                  <Typography textAlign="center">Procesadores</Typography>
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <NavLink
+                  to="/category/gabinete"
+                  style={() => ({
+                    color: "#000",
+                    textDecoration: "none",
+                  })}
+                >
+                  <Typography textAlign="center">Gabinetes</Typography>
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <NavLink
+                  to="/category/motherboard"
+                  style={() => ({
+                    color: "#000",
+                    textDecoration: "none",
+                  })}
+                >
+                  <Typography textAlign="center">Motherboards</Typography>
+                </NavLink>
+              </MenuItem>
             </Menu>
           </Box>
 
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="/home"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -117,7 +150,15 @@ const NavBar = () => {
               textDecoration: "none",
             }}
           >
-            ZONO!
+            <NavLink
+              to="/"
+              style={() => ({
+                color: "#fff",
+                textDecoration: "none",
+              })}
+            >
+              ZONO!
+            </NavLink>
           </Typography>
           <Box
             alignItems="center"
@@ -127,15 +168,44 @@ const NavBar = () => {
               display: { xs: "none", md: "flex" },
             }}
           >
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "flex" }}
+            >
+              <MenuItem onClick={handleCloseNavMenu}>
+                <NavLink
+                  to="/category/procesador"
+                  style={() => ({
+                    color: "#fff",
+                    textDecoration: "none",
+                  })}
+                >
+                  <Typography textAlign="center">Procesadores</Typography>
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <NavLink
+                  to="/category/gabinete"
+                  style={() => ({
+                    color: "#fff",
+                    textDecoration: "none",
+                  })}
+                >
+                  <Typography textAlign="center">Gabinetes</Typography>
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <NavLink
+                  to="/category/motherboard"
+                  style={() => ({
+                    color: "#fff",
+                    textDecoration: "none",
+                  })}
+                >
+                  <Typography textAlign="center">Motherboards</Typography>
+                </NavLink>
+              </MenuItem>
+            </Button>
           </Box>
           <CartWidget />
           <Box sx={{ flexGrow: 0 }}>

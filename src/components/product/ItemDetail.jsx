@@ -70,11 +70,13 @@ export default function ItemDetail({ item, onAdd }) {
         </Card>
         <Box p="2rem">
           <Typography variant="h4" color="text.primary" pb="1rem">
-            Descripción
+            Características
           </Typography>
 
           <Typography variant="body1" color="text.secondary">
-            {item.description}
+            {item.description.map((description) => (
+              <li key={description}>{description}</li>
+            ))}
           </Typography>
         </Box>
       </Box>
