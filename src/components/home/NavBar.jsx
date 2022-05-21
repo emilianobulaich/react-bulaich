@@ -58,6 +58,7 @@ const NavBar = () => {
             <NavLink
               to="/"
               style={() => ({
+                width: "100%",
                 color: "#fff",
                 textDecoration: "none",
               })}
@@ -104,6 +105,7 @@ const NavBar = () => {
                 <NavLink
                   to="/category/procesador"
                   style={() => ({
+                    width: "100%",
                     color: "#000",
                     textDecoration: "none",
                   })}
@@ -126,6 +128,7 @@ const NavBar = () => {
                 <NavLink
                   to="/category/motherboard"
                   style={() => ({
+                    width: "100%",
                     color: "#000",
                     textDecoration: "none",
                   })}
@@ -153,6 +156,7 @@ const NavBar = () => {
             <NavLink
               to="/"
               style={() => ({
+                width: "100%",
                 color: "#fff",
                 textDecoration: "none",
               })}
@@ -176,6 +180,7 @@ const NavBar = () => {
                 <NavLink
                   to="/category/procesador"
                   style={() => ({
+                    width: "100%",
                     color: "#fff",
                     textDecoration: "none",
                   })}
@@ -198,6 +203,7 @@ const NavBar = () => {
                 <NavLink
                   to="/category/motherboard"
                   style={() => ({
+                    width: "100%",
                     color: "#fff",
                     textDecoration: "none",
                   })}

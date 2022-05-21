@@ -41,6 +41,7 @@ export default function Item({ item }) {
           <NavLink
             to={`/item/${item.id}`}
             style={() => ({
+              width: "100%",
               color: "#1976d2",
               textDecoration: "none",
             })}

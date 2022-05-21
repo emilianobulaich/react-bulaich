@@ -10,6 +10,7 @@ export default function CartWidget() {
         <NavLink
           to="/cart"
           style={() => ({
+            width: "100%",
             color: "#fff",
             textDecoration: "none",
           })}

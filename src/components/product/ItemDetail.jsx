@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "@fontsource/roboto/300.css";
 import {
   Box,
@@ -8,10 +9,18 @@ import {
   Typography,
   Divider,
   Grid,
+  Button,
 } from "@mui/material";
 
 import ItemCount from "./ItemCount";
-export default function ItemDetail({ item, onAdd }) {
+export default function ItemDetail({ item }) {
+  const [activarCount, setActivarCount] = useState(true);
+
+  const onAdd = (cantidad) => {
+    alert(`Agregando ${cantidad} productos al carrito`);
+    setActivarCount(false);
+  };
+
   return (
     <>
       <Box
@@ -63,8 +72,52 @@ export default function ItemDetail({ item, onAdd }) {
                   Precio: {item.price}
                 </Typography>
               </Grid>
-
-              <ItemCount initial={1} stock={10} onAdd={onAdd} />
+              {activarCount ? (
+                <ItemCount initial={1} stock={10} onAdd={onAdd} />
+              ) : (
+                <>
+                  <Button
+                    size="large"
+                    variant="text"
+                    fullWidth
+                    sx={{
+                      backgroundColor: "#D6EAF9",
+                      mt: "10px !important",
+                    }}
+                  >
+                    <NavLink
+                      to="/"
+                      style={() => ({
+                        width: "100%",
+                        color: "#1976d2",
+                        textDecoration: "none",
+                      })}
+                    >
+                      Seguir comprando
+                    </NavLink>
+                  </Button>
+                  <Button
+                    size="large"
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      m: "0 auto !important",
+                      mt: "10px !important",
+                    }}
+                  >
+                    <NavLink
+                      to="/cart"
+                      style={() => ({
+                        width: "100%",
+                        color: "#fff",
+                        textDecoration: "none",
+                      })}
+                    >
+                      Ir al carrito
+                    </NavLink>
+                  </Button>
+                </>
+              )}
             </Grid>
           </CardContent>
         </Card>

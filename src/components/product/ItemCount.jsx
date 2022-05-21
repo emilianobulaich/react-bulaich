@@ -3,7 +3,6 @@ import * as React from "react";
 import CardActions from "@mui/material/CardActions";
 
 import Button from "@mui/material/Button";
-import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Box } from "@mui/material";
 
@@ -53,26 +52,6 @@ export default function ItemCount({ stock, initial, onAdd }) {
           onClick={() => onAdd(cantidad)}
         >
           Añadir al carrito
-        </Button>
-
-        <Button
-          size="large"
-          variant="contained"
-          fullWidth
-          sx={{
-            m: "0 auto !important",
-            mt: "10px !important",
-          }}
-        >
-          <NavLink
-            to="/cart"
-            style={() => ({
-              color: "#fff",
-              textDecoration: "none",
-            })}
-          >
-            Comprar ahora
-          </NavLink>
         </Button>
       </CardActions>
     </Box>
