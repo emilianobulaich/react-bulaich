@@ -22,6 +22,7 @@ const listaItems = [
     ],
     price: "$5.907",
     pictureUrl: "https://mexx-img-2019.s3.amazonaws.com/36329_2.jpeg",
+    stock: 5,
   },
   {
     id: 2,
@@ -47,6 +48,7 @@ const listaItems = [
     price: "$24.549",
     pictureUrl:
       "https://mexx-img-2019.s3.amazonaws.com/Procesador-Amd-Ryzen-5-5500_42560_1.jpeg",
+    stock: 4,
   },
   {
     id: 3,
@@ -74,6 +76,7 @@ const listaItems = [
     price: "$59.499",
     pictureUrl:
       "https://mexx-img-2019.s3.amazonaws.com/procesador-i7-rocket_39853_1.jpeg",
+    stock: 7,
   },
   {
     id: 4,
@@ -102,6 +105,7 @@ const listaItems = [
     ],
     price: "$6.499",
     pictureUrl: "https://mexx-img-2019.s3.amazonaws.com/37075_1.jpeg",
+    stock: 10,
   },
   {
     id: 5,
@@ -132,6 +136,7 @@ const listaItems = [
     ],
     price: "$10.049",
     pictureUrl: "https://mexx-img-2019.s3.amazonaws.com/38688_1.jpeg",
+    stock: 23,
   },
   {
     id: 6,
@@ -164,6 +169,7 @@ const listaItems = [
     price: "$38.599",
     pictureUrl:
       "https://mexx-img-2019.s3.amazonaws.com/motherboard-msi-gaming-rgb-gamer-wifi_42398_1.jpeg?v797",
+    stock: 21,
   },
 
   {
@@ -194,6 +200,7 @@ const listaItems = [
     price: "$4.659",
     pictureUrl:
       "https://mexx-img-2019.s3.amazonaws.com/gabinete-gamer-sentey-rgb_41987_1.jpeg",
+    stock: 9,
   },
   {
     id: 8,
@@ -222,6 +229,7 @@ const listaItems = [
     price: "$9.399",
     pictureUrl:
       "https://mexx-img-2019.s3.amazonaws.com/gabinete-sentey_41991_5.jpeg?v322",
+    stock: 11,
   },
   {
     id: 9,
@@ -250,6 +258,7 @@ const listaItems = [
     price: "$4.299",
     pictureUrl:
       "https://mexx-img-2019.s3.amazonaws.com/gabinete-gamer-sentey-rgb_41988_1.jpeg",
+    stock: 25,
   },
 ];
 export { listaItems };

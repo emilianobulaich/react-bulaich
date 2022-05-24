@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "@fontsource/roboto/300.css";
 import {
@@ -13,12 +13,16 @@ import {
 } from "@mui/material";
 
 import ItemCount from "./ItemCount";
+import { CartContext } from "../contexts/CartContext";
 export default function ItemDetail({ item }) {
   const [activarCount, setActivarCount] = useState(true);
+
+  const { addItem, removeItem, clear } = useContext(CartContext);
 
   const onAdd = (cantidad) => {
     alert(`Agregando ${cantidad} productos al carrito`);
     setActivarCount(false);
+    addItem(item, cantidad);
   };
 
   return (
@@ -72,8 +76,13 @@ export default function ItemDetail({ item }) {
                   Precio: {item.price}
                 </Typography>
               </Grid>
+              <Grid item xs={12} mb="2rem">
+                <Typography variant="h5" color="#232323">
+                  Cantidad Disponible: {item.stock}
+                </Typography>
+              </Grid>
               {activarCount ? (
-                <ItemCount initial={1} stock={10} onAdd={onAdd} />
+                <ItemCount initial={1} stock={item.stock} onAdd={onAdd} />
               ) : (
                 <>
                   <Button
@@ -115,6 +124,30 @@ export default function ItemDetail({ item }) {
                     >
                       Ir al carrito
                     </NavLink>
+                  </Button>
+                  <Button
+                    size="large"
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      m: "0 auto !important",
+                      mt: "10px !important",
+                    }}
+                    onClick={() => removeItem(item)}
+                  >
+                    Eliminar este producto del arreglo
+                  </Button>
+                  <Button
+                    size="large"
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      m: "0 auto !important",
+                      mt: "10px !important",
+                    }}
+                    onClick={clear}
+                  >
+                    Vaciar arreglo
                   </Button>
                 </>
               )}

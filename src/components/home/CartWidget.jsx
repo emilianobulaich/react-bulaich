@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Badge, Box, IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { CartContext } from "../contexts/CartContext";
 
 export default function CartWidget() {
+  const { totalQuantity } = useContext(CartContext);
   return (
     <>
       <Box sx={{ flexGrow: 0, mx: 1 }}>
@@ -21,7 +23,7 @@ export default function CartWidget() {
             color="inherit"
             sx={{}}
           >
-            <Badge badgeContent={4} color="error">
+            <Badge badgeContent={totalQuantity} color="error">
               <ShoppingCartIcon></ShoppingCartIcon>
             </Badge>
           </IconButton>

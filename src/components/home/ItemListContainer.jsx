@@ -12,11 +12,6 @@ export default function ItemListContainer(/* { greeting } */) {
   const [error, setError] = useState(false);
 
   const { categoryId } = useParams();
-  /* 
-  /* 
-  Para probar que pasa al pasarle una lista vacía como parametro a la funcion "fetchListado"
-    const listaFalsa = [];
-*/
 
   useEffect(() => {
     const fetchListado = (listado) => {
