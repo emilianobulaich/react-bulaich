@@ -17,7 +17,7 @@ import { CartContext } from "../contexts/CartContext";
 export default function ItemDetail({ item }) {
   const [activarCount, setActivarCount] = useState(true);
 
-  const { addItem, removeItem, clear } = useContext(CartContext);
+  const { addItem } = useContext(CartContext);
 
   const onAdd = (cantidad) => {
     alert(`Agregando ${cantidad} productos al carrito`);
@@ -110,7 +110,6 @@ export default function ItemDetail({ item }) {
                     variant="contained"
                     fullWidth
                     sx={{
-                      m: "0 auto !important",
                       mt: "10px !important",
                     }}
                   >
@@ -122,32 +121,8 @@ export default function ItemDetail({ item }) {
                         textDecoration: "none",
                       })}
                     >
-                      Ir al carrito
+                      Terminar compra
                     </NavLink>
-                  </Button>
-                  <Button
-                    size="large"
-                    variant="contained"
-                    fullWidth
-                    sx={{
-                      m: "0 auto !important",
-                      mt: "10px !important",
-                    }}
-                    onClick={() => removeItem(item)}
-                  >
-                    Eliminar este producto del arreglo
-                  </Button>
-                  <Button
-                    size="large"
-                    variant="contained"
-                    fullWidth
-                    sx={{
-                      m: "0 auto !important",
-                      mt: "10px !important",
-                    }}
-                    onClick={clear}
-                  >
-                    Vaciar arreglo
                   </Button>
                 </>
               )}

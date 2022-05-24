@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import CartWidget from "./CartWidget";
+import CartWidget from "../cart/CartWidget";
 
 const settings = ["Perfil", "Cuenta", "Salir"];
 

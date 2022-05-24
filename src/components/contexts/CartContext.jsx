@@ -6,16 +6,24 @@ export const CartContext = createContext(undefined);
 export default function CartProvider({ children }) {
   const [productosAgregados, setProductosAgregados] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const addItem = (item, cantidad) => {
     if (isInCart(item.id)) {
-      alert("Elemento ya ingresado");
-      item.quantity += cantidad;
-      setTotalQuantity(totalQuantity + cantidad);
-      setProductosAgregados([...productosAgregados]);
+      if (item.quantity + cantidad <= item.stock) {
+        item.quantity += cantidad;
+        setTotalQuantity(totalQuantity + cantidad);
+        setProductosAgregados([...productosAgregados]);
+
+        setTotalPrice(item.price * item.quantity);
+      } else {
+        alert("Stock insuficiente");
+      }
     } else {
       item.quantity = cantidad;
       setProductosAgregados([...productosAgregados, item]);
       setTotalQuantity(totalQuantity + item.quantity);
+      setTotalPrice(item.price * item.quantity + totalPrice);
     }
   };
 
@@ -26,8 +34,7 @@ export default function CartProvider({ children }) {
       alert("Producto eliminado");
       setProductosAgregados([...respuesta]);
       setTotalQuantity(totalQuantity - item.quantity);
-    } else {
-      alert("No se pudo eliminar el producto del carrito");
+      setTotalPrice(totalPrice - item.price * item.quantity);
     }
   };
 
@@ -42,10 +49,18 @@ export default function CartProvider({ children }) {
     return productosAgregados.find((e) => e.id === itemId);
   };
 
-  let values = { addItem, removeItem, clear, isInCart, totalQuantity };
+  let values = {
+    addItem,
+    removeItem,
+    clear,
+    isInCart,
+    totalQuantity,
+    totalPrice,
+    productosAgregados,
+  };
   return (
     <>
-      <CartContext.Provider value={values}>{children}</CartContext.Provider>;
+      <CartContext.Provider value={values}>{children}</CartContext.Provider>
     </>
   );
 }

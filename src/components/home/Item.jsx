@@ -33,7 +33,7 @@ export default function Item({ item }) {
           {item.title}
         </Typography>
         <Typography variant="h5" color="#1976d2" mt="10px">
-          Precio: {item.price}
+          Precio: ${item.price}
         </Typography>
       </CardContent>
       <CardActions>
