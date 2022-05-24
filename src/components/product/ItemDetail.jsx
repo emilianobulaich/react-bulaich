@@ -20,7 +20,6 @@ export default function ItemDetail({ item }) {
   const { addItem } = useContext(CartContext);
 
   const onAdd = (cantidad) => {
-    alert(`Agregando ${cantidad} productos al carrito`);
     setActivarCount(false);
     addItem(item, cantidad);
   };

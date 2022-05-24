@@ -1,5 +1,6 @@
 //@ts-check
 import React, { createContext, useState } from "react";
+import { Stack, Alert } from "@mui/material";
 
 export const CartContext = createContext(undefined);
 
@@ -17,7 +18,9 @@ export default function CartProvider({ children }) {
 
         setTotalPrice(item.price * item.quantity);
       } else {
-        alert("Stock insuficiente");
+        <Stack sx={{ width: "100%" }}>
+          <Alert severity="error">"Stock insuficiente!"</Alert>
+        </Stack>;
       }
     } else {
       item.quantity = cantidad;
@@ -31,7 +34,6 @@ export default function CartProvider({ children }) {
     let respuesta = productosAgregados.filter((e) => e.id !== item.id);
 
     if (respuesta) {
-      alert("Producto eliminado");
       setProductosAgregados([...respuesta]);
       setTotalQuantity(totalQuantity - item.quantity);
       setTotalPrice(totalPrice - item.price * item.quantity);
@@ -41,8 +43,6 @@ export default function CartProvider({ children }) {
   const clear = () => {
     setProductosAgregados([]);
     setTotalQuantity(0);
-
-    alert("Array vaciado");
   };
 
   const isInCart = (itemId) => {
