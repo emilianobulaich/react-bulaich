@@ -46,7 +46,7 @@ export default function ItemDetail({ item }) {
               component="img"
               alt="Auto"
               height="auto"
-              image={item.pictureUrl}
+              image={item.pictureURL}
             />
           </Box>
           <Divider orientation="vertical" flexItem />

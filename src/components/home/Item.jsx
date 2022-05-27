@@ -26,7 +26,7 @@ export default function Item({ item }) {
         component="img"
         alt="Auto"
         height="300"
-        image={item.pictureUrl}
+        image={item.pictureURL}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

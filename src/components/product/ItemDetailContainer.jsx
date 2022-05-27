@@ -1,20 +1,33 @@
 //@ts-check
 import React, { useState, useEffect } from "react";
-import { Alert, Stack, Backdrop, CircularProgress } from "@mui/material";
-
+/* import { Alert, Stack, Backdrop, CircularProgress } from "@mui/material"; */
+/* import { listaItems } from "../../db/listaItems"; */
 /* import { listaProcesadores, listaGabinetes } from "../../db/listaProcesadores"; */
 import ItemDetail from "./ItemDetail";
 import { useParams } from "react-router-dom";
-import { listaItems } from "../../db/listaItems";
 
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 export default function ItemDetailContainer() {
-  const [item, setItem] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  /* const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false); */
 
+  const [item, setItem] = useState(undefined);
   const { id } = useParams();
 
-  const fetchItem = (items, id) => {
+  useEffect(() => {
+    const db = getFirestore();
+
+    if (id) {
+      const producto = doc(db, "products", id);
+      getDoc(producto).then((snapshot) => {
+        setItem({ id: snapshot.id, ...snapshot.data() });
+      });
+    } else {
+      alert("no id");
+    }
+  }, [id]);
+
+  /*  const fetchItem = (items, id) => {
     const traerItem = new Promise((res, rej) => {
       setLoading(true);
       setError(false);
@@ -46,9 +59,9 @@ export default function ItemDetailContainer() {
 
   useEffect(() => {
     fetchItem(listaItems, id);
-  }, [id]);
+  }, [id]); */
 
-  if (error) {
+  /*  if (error) {
     return (
       <>
         <Stack sx={{ width: "100%" }} spacing={2}>
@@ -56,19 +69,19 @@ export default function ItemDetailContainer() {
         </Stack>
       </>
     );
-  }
+  } */
 
   return (
-    <div>
-      {loading && (
+    <>
+      {/* {loading && (
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={loading}
         >
           <CircularProgress color="inherit" />
         </Backdrop>
-      )}
+      )} */}
       {item && <ItemDetail item={item} />}
-    </div>
+    </>
   );
 }
