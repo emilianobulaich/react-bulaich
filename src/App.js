@@ -6,6 +6,7 @@ import NavBar from "./components/home/NavBar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CartProvider from "./components/contexts/CartContext.jsx";
 import Cart from "./components/cart/Cart";
+import Checkout from "./components/checkout/Checkout";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
               element={<ItemListContainer /* greeting="Juan "*/ />}
             />
             <Route path={`/cart`} element={<Cart />} />
+            <Route path={`/checkout`} element={<Checkout />} />
           </Routes>
         </BrowserRouter>
       </CartProvider>

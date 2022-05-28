@@ -10,6 +10,7 @@ import {
   Divider,
   Grid,
   Button,
+  Alert,
 } from "@mui/material";
 
 import ItemCount from "./ItemCount";
@@ -80,7 +81,9 @@ export default function ItemDetail({ item }) {
                   Cantidad Disponible: {item.stock}
                 </Typography>
               </Grid>
-              {activarCount ? (
+              {item.stock === 0 ? (
+                <Alert severity="error">"No hay stock!"</Alert>
+              ) : activarCount ? (
                 <ItemCount initial={1} stock={item.stock} onAdd={onAdd} />
               ) : (
                 <>

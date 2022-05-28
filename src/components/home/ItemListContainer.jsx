@@ -90,7 +90,6 @@ export default function ItemListContainer(/* { greeting } */) {
 
   return (
     <>
-      {console.log(listado)}
       {/* Hola {greeting} */}
       {/* {loading && (
         <Backdrop

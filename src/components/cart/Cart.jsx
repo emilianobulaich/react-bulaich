@@ -157,6 +157,25 @@ export default function Cart() {
               >
                 Borrar todo
               </Button>
+              <Button
+                size="small"
+                variant="contained"
+                sx={{
+                  m: "10px",
+                  backgroundColor: "green",
+                }}
+              >
+                <NavLink
+                  to="/checkout"
+                  style={() => ({
+                    width: "100%",
+                    color: "white",
+                    textDecoration: "none",
+                  })}
+                >
+                  Terminar compra
+                </NavLink>
+              </Button>
             </Box>
             <ThemeProvider theme={themeWithLocale}>
               <TablePagination
@@ -175,7 +194,11 @@ export default function Cart() {
         <>
           <Stack sx={{ width: "100%" }}>
             <Alert severity="error">"No hay productos en el carrito!"</Alert>
-            <Button size="large" variant="contained" sx={{ m: "0 auto" }}>
+            <Button
+              size="large"
+              variant="contained"
+              sx={{ m: "0 auto", mt: 2 }}
+            >
               <NavLink
                 to="/"
                 style={() => ({
