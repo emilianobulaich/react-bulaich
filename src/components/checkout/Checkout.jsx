@@ -1,4 +1,3 @@
-//@ts-check
 import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
@@ -17,6 +16,7 @@ import {
   getFirestore,
   updateDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
 import { CartContext } from "../contexts/CartContext";
 
@@ -31,16 +31,8 @@ export default function Checkout() {
   const [form, setForm] = useState(initialForm);
   const [exito, setExito] = useState(false);
   const [orderId, setOrderId] = useState(undefined);
-  const [orden, setOrden] = useState(null);
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const order = {
-      buyer: form,
-      items: [...productosAgregados],
-      total: totalPrice,
-    };
-    setOrden(order);
-  }, [form, totalPrice]);
+  const [productosCarritos, setProductosCarrito] = useState(undefined);
 
   const handleChange = (e) => {
     setForm({
@@ -49,20 +41,20 @@ export default function Checkout() {
     });
   };
   const handleSubmit = (e) => {
+    e.preventDefault();
     const db = getFirestore();
 
     const coleccion = collection(db, "orders");
-    e.preventDefault();
-    addDoc(coleccion, orden).then(({ id }) => setOrderId(id));
-    setExito(true);
-    let orderDoc;
 
-    orden.items.map((item) => {
-      return (
-        (orderDoc = doc(db, "products", item.id)),
-        updateDoc(orderDoc, { stock: item.stock - item.quantity })
-      );
+    addDoc(coleccion, productosCarritos).then(({ id }) => setOrderId(id));
+    setExito(true);
+
+    productosCarritos.items.map((item) => {
+      return updateDoc(doc(db, "products", item.id), {
+        stock: item.stock - item.quantity,
+      });
     });
+
     activeLoading();
     clear();
   };
@@ -74,18 +66,43 @@ export default function Checkout() {
     }, 1500);
   };
 
+  useEffect(() => {
+    const order = {
+      buyer: form,
+      items: [...productosAgregados],
+      total: totalPrice,
+    };
+    const getProducts = () => {
+      const db = getFirestore();
+
+      if (orderId !== undefined) {
+        const Carrito = doc(db, "orders", orderId);
+
+        getDoc(Carrito).then((snapshot) => {
+          console.log(snapshot);
+          setProductosCarrito({ id: snapshot.id, ...snapshot.data() });
+        });
+      } else {
+        setProductosCarrito(order);
+      }
+    };
+    getProducts();
+  }, [orderId, form, productosAgregados, totalPrice]);
   return (
     <>
       {loading ? (
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
+        <>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={loading}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        </>
       ) : productosAgregados.length > 0 || orderId !== undefined ? (
-        exito && orden ? (
+        exito && productosCarritos ? (
           <>
+            {console.log(productosCarritos)}
             <Stack sx={{ width: "100%" }}>
               <Alert severity="success">Compra realizada con éxito!</Alert>
               <Paper
@@ -94,9 +111,11 @@ export default function Checkout() {
               >
                 <h2>Datos del cliente: </h2>
                 <p>ID de orden: {orderId}</p>
-                <p>El nombre del comprador es: {orden.buyer.name}</p>
+                <p>
+                  El nombre del comprador es: {productosCarritos.buyer.name}
+                </p>
                 <h2>Detalle de productos: </h2>
-                {orden.items.map((item) => (
+                {productosCarritos.items.map((item) => (
                   <>
                     <p key={item.id}>
                       {item.title} x {item.quantity}
