@@ -5,14 +5,8 @@ import React, { useState, useEffect } from "react";
 import { listaItems } from "../../db/listaItems"; */
 import { useParams } from "react-router-dom";
 import ItemList from "./ItemList";
+import { getProducts } from "../../firebase/requests";
 
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where,
-} from "firebase/firestore";
 export default function ItemListContainer(/* { greeting } */) {
   const [listado, setListado] = useState([]);
   /* const [loading, setLoading] = useState(false);
@@ -21,72 +15,12 @@ export default function ItemListContainer(/* { greeting } */) {
   const { categoryId } = useParams();
 
   useEffect(() => {
-    const db = getFirestore();
-    let q;
-    if (categoryId) {
-      q = query(
-        collection(db, "products"),
-        where("category", "==", categoryId)
-      );
-    } else {
-      q = query(collection(db, "products"));
-    }
-
-    getDocs(q).then((snapshot) => {
-      setListado(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-    });
-  }, [categoryId]);
-
-  /* useEffect(() => {
-    const db = getFirestore();
-
-    const producto = doc(db, "products", "EgdfBEao1mDgi7VmHs6g");
-    getDoc(producto).then((snapshot) => {
-      if (snapshot.exists()) {
-        setListado([{ id: snapshot.id, ...snapshot.data() }]);
-      }
-    });
-  }, []); */
-  /* useEffect(() => {
-    const fetchListado = (listado) => {
-      const traerListado = new Promise((res, rej) => {
-        setLoading(true);
-        setError(false);
-        setTimeout(() => {
-          if (categoryId) {
-            listado = listado.filter((lista) => lista.category === categoryId);
-          }
-          if (listado.length > 0) {
-            res(listado);
-          } else {
-            rej("No se pudieron cargar los productos");
-          }
-        }, 2000);
-      });
-
-      traerListado
-        .then((res) => {
-          setListado(res);
-        })
-        .catch((err) => setError(err))
-        .finally(() => {
-          setLoading(false);
-        });
+    const getListado = async () => {
+      const productos = await getProducts(categoryId);
+      setListado(productos);
     };
-    fetchListado(listaItems);
-  }, [categoryId]); */
-
-  /* if (error) {
-    return (
-      <>
-        <Stack sx={{ width: "100%" }} spacing={2}>
-          <Alert severity="error">
-            Error al intentar cargar los productos!
-          </Alert>
-        </Stack>
-      </>
-    );
-  } */
+    getListado();
+  }, [categoryId]);
 
   return (
     <>

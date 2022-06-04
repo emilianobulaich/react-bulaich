@@ -8,17 +8,11 @@ import {
   Paper,
   Backdrop,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import {
-  collection,
-  addDoc,
-  getFirestore,
-  updateDoc,
-  doc,
-  getDoc,
-} from "firebase/firestore";
 import { CartContext } from "../contexts/CartContext";
+import { getProduct, SaveOrder, updateStock } from "../../firebase/requests";
 
 export default function Checkout() {
   const { productosAgregados, totalPrice, clear } = useContext(CartContext);
@@ -29,10 +23,18 @@ export default function Checkout() {
     phone: "",
   };
   const [form, setForm] = useState(initialForm);
-  const [exito, setExito] = useState(false);
+  /*  const [formErrors, setFormErrors] = useState({}); */
+  const [isSubmit, setIsSubmit] = useState(false);
   const [orderId, setOrderId] = useState(undefined);
   const [loading, setLoading] = useState(false);
-  const [productosCarritos, setProductosCarrito] = useState(undefined);
+  const [productosCarritos, setProductosCarritos] = useState(undefined);
+
+  const activeLoading = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+  };
 
   const handleChange = (e) => {
     setForm({
@@ -42,29 +44,41 @@ export default function Checkout() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const db = getFirestore();
-
-    const coleccion = collection(db, "orders");
-
-    addDoc(coleccion, productosCarritos).then(({ id }) => setOrderId(id));
-    setExito(true);
-
-    productosCarritos.items.map((item) => {
-      return updateDoc(doc(db, "products", item.id), {
-        stock: item.stock - item.quantity,
-      });
-    });
-
+    const LoadOrder = async () => {
+      const id = await SaveOrder(productosCarritos);
+      setOrderId(id);
+    };
+    LoadOrder();
+    updateStock(productosCarritos);
     activeLoading();
+    setIsSubmit(true);
     clear();
+
+    /*
+    setFormErrors(validate(form)); */
+
+    /* if (validate(form).length === 0) {
+      SaveOrder();
+    } */
+    /* setIsSubmit(true); */
+    /* if (Object.keys(formErrors).length === 0 && isSubmit) {
+      
+    } */
   };
 
-  const activeLoading = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  };
+  /* const validate = (values) => {
+    const errors = {};
+    if (!values.name) {
+      errors.name = "Nombre requerido";
+    }
+    if (!values.email) {
+      errors.email = "Email requerido";
+    }
+    if (!values.phone) {
+      errors.phone = "Telefono requerido";
+    }
+    return errors;
+  }; */
 
   useEffect(() => {
     const order = {
@@ -72,22 +86,39 @@ export default function Checkout() {
       items: [...productosAgregados],
       total: totalPrice,
     };
-    const getProducts = () => {
-      const db = getFirestore();
-
+    const getListados = async () => {
       if (orderId !== undefined) {
-        const Carrito = doc(db, "orders", orderId);
-
-        getDoc(Carrito).then((snapshot) => {
-          console.log(snapshot);
-          setProductosCarrito({ id: snapshot.id, ...snapshot.data() });
-        });
+        const product = await getProduct(orderId);
+        setProductosCarritos(product);
+        console.log(product, "Hola");
       } else {
-        setProductosCarrito(order);
+        setProductosCarritos(order);
+        console.log(order, "Chau");
       }
     };
-    getProducts();
-  }, [orderId, form, productosAgregados, totalPrice]);
+    getListados();
+
+    /* const SaveOrder = () => {
+      const db = getFirestore();
+
+      const coleccion = collection(db, "orders");
+
+      addDoc(coleccion, productosCarritos).then(({ id }) => setOrderId(id));
+
+      productosCarritos.items.map((item) => {
+        return updateDoc(doc(db, "products", item.id), {
+          stock: item.stock - item.quantity,
+        });
+      });
+
+      activeLoading();
+      clear();
+    }; */
+
+    /* if (Object.keys(formErrors).length === 0 && isSubmit) {
+      SaveOrder();
+    } */
+  }, [form, /*  formErrors, */ productosAgregados, totalPrice, orderId]);
   return (
     <>
       {loading ? (
@@ -100,7 +131,8 @@ export default function Checkout() {
           </Backdrop>
         </>
       ) : productosAgregados.length > 0 || orderId !== undefined ? (
-        exito && productosCarritos ? (
+        isSubmit && productosCarritos /* &&
+        Object.keys(formErrors).length === 0 */ ? (
           <>
             {console.log(productosCarritos)}
             <Stack sx={{ width: "100%" }}>
@@ -116,11 +148,9 @@ export default function Checkout() {
                 </p>
                 <h2>Detalle de productos: </h2>
                 {productosCarritos.items.map((item) => (
-                  <>
-                    <p key={item.id}>
-                      {item.title} x {item.quantity}
-                    </p>
-                  </>
+                  <p key={item.title}>
+                    {item.title} x {item.quantity}
+                  </p>
                 ))}
                 <h2>Total:</h2>
                 <p>${totalPrice}</p>
@@ -162,6 +192,9 @@ export default function Checkout() {
                 onChange={handleChange}
                 value={form.name}
               />
+              <Typography variant="p" color="error" pb="1rem">
+                {/* {formErrors.name} */}
+              </Typography>
               <TextField
                 required
                 name="email"
@@ -169,6 +202,9 @@ export default function Checkout() {
                 onChange={handleChange}
                 value={form.email}
               />
+              <Typography variant="p" color="error" pb="1rem">
+                {/*  {formErrors.email} */}
+              </Typography>
               <TextField
                 required
                 name="phone"
@@ -176,6 +212,9 @@ export default function Checkout() {
                 onChange={handleChange}
                 value={form.phone}
               />
+              <Typography variant="p" color="error" pb="1rem">
+                {/* {formErrors.phone} */}
+              </Typography>
             </div>
             <Button
               type="submit"

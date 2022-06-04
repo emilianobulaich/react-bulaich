@@ -4,16 +4,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { initializeApp } from "firebase/app";
-
-initializeApp({
-  apiKey: "AIzaSyCRKthq9qTcKPC1yqbvqjgwKGYiQcI4b7E",
-  authDomain: "react-bulaich.firebaseapp.com",
-  projectId: "react-bulaich",
-  storageBucket: "react-bulaich.appspot.com",
-  messagingSenderId: "762663427025",
-  appId: "1:762663427025:web:c52f48d17cbfbd29465ef0",
-});
 
 /*
 useEffect(() => {
