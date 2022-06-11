@@ -7,7 +7,7 @@ Este sitio web es un Ecommerce donde se pueden visualizar productos pudiendo fil
 
 Para acceder al sitio debemos entrar en: https://react-bulaich.web.app/
 
-![](/public/Zono.gif)
+![](public/Zono.gif)
 
 
 ##Tecnologías utilizadas
