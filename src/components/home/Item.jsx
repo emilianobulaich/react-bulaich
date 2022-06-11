@@ -37,13 +37,19 @@ export default function Item({ item }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="large" variant="outlined" fullWidth>
+        <Button
+          size="large"
+          variant="contained"
+          fullWidth
+          sx={{ m: "0px", p: "0px" }}
+        >
           <NavLink
             to={`/item/${item.id}`}
             style={() => ({
               width: "100%",
-              color: "#1976d2",
+              color: "white",
               textDecoration: "none",
+              padding: "10px",
             })}
           >
             Ver detalle del producto

@@ -31,7 +31,7 @@ export default function ItemDetail({ item }) {
         sx={{
           width: "60%",
           m: "0 auto",
-          mt: "20px",
+          my: "20px",
           boxShadow: 5,
           borderRadius: 2,
         }}
@@ -93,6 +93,8 @@ export default function ItemDetail({ item }) {
                     fullWidth
                     sx={{
                       backgroundColor: "#D6EAF9",
+                      m: 0,
+                      p: 0,
                       mt: "10px !important",
                     }}
                   >
@@ -102,6 +104,8 @@ export default function ItemDetail({ item }) {
                         width: "100%",
                         color: "#1976d2",
                         textDecoration: "none",
+                        margin: 5,
+                        padding: 5,
                       })}
                     >
                       Seguir comprando
@@ -112,6 +116,8 @@ export default function ItemDetail({ item }) {
                     variant="contained"
                     fullWidth
                     sx={{
+                      m: 0,
+                      p: 0,
                       mt: "10px !important",
                     }}
                   >
@@ -121,6 +127,8 @@ export default function ItemDetail({ item }) {
                         width: "100%",
                         color: "#fff",
                         textDecoration: "none",
+                        margin: 5,
+                        padding: 5,
                       })}
                     >
                       Terminar compra
@@ -137,6 +145,7 @@ export default function ItemDetail({ item }) {
           </Typography>
 
           <Typography variant="body1" color="text.secondary">
+            {console.log(item)}
             {item.description.map((description) => (
               <li key={description}>{description}</li>
             ))}

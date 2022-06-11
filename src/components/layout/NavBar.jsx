@@ -1,5 +1,4 @@
-//@ts-check
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   AppBar,
@@ -10,19 +9,20 @@ import {
   Menu,
   Container,
   Avatar,
-  Button,
   Tooltip,
   MenuItem,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import CartWidget from "../cart/CartWidget";
+import { getCategories } from "../../firebase/requests";
 
 const settings = ["Perfil", "Cuenta", "Salir"];
 
-const NavBar = () => {
+export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [categories, setCategories] = useState([]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,8 +39,18 @@ const NavBar = () => {
     setAnchorElUser(null);
   };
 
+  const getAndSetCategories = async () => {
+    const cat = await getCategories();
+
+    setCategories(cat);
+  };
+
+  useEffect(() => {
+    getAndSetCategories();
+  }, []);
+
   return (
-    <AppBar position="static" sx={{ background: "#232323" }} style={{}}>
+    <AppBar position="static" sx={{ background: "#232323", height: "10vh" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -101,41 +111,24 @@ const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <NavLink
-                  to="/category/procesador"
-                  style={() => ({
-                    width: "100%",
-                    color: "#000",
-                    textDecoration: "none",
-                  })}
-                >
-                  <Typography textAlign="center">Procesadores</Typography>
-                </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <NavLink
-                  to="/category/gabinete"
-                  style={() => ({
-                    color: "#000",
-                    textDecoration: "none",
-                  })}
-                >
-                  <Typography textAlign="center">Gabinetes</Typography>
-                </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <NavLink
-                  to="/category/motherboard"
-                  style={() => ({
-                    width: "100%",
-                    color: "#000",
-                    textDecoration: "none",
-                  })}
-                >
-                  <Typography textAlign="center">Motherboards</Typography>
-                </NavLink>
-              </MenuItem>
+              {categories
+                ? categories.map(({ name, section }) => (
+                    <div key={name}>
+                      <MenuItem onClick={handleCloseNavMenu} key={section}>
+                        <NavLink
+                          to={`/category/${section}`}
+                          style={() => ({
+                            width: "100%",
+                            color: "#000",
+                            textDecoration: "none",
+                          })}
+                        >
+                          <Typography textAlign="center">{name}</Typography>
+                        </NavLink>
+                      </MenuItem>
+                    </div>
+                  ))
+                : console.log("error")}
             </Menu>
           </Box>
 
@@ -143,7 +136,6 @@ const NavBar = () => {
             variant="h5"
             noWrap
             sx={{
-              mr: 2,
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontFamily: "monospace",
@@ -172,46 +164,24 @@ const NavBar = () => {
               display: { xs: "none", md: "flex" },
             }}
           >
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "flex" }}
-            >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <NavLink
-                  to="/category/procesador"
-                  style={() => ({
-                    width: "100%",
-                    color: "#fff",
-                    textDecoration: "none",
-                  })}
-                >
-                  <Typography textAlign="center">Procesadores</Typography>
-                </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <NavLink
-                  to="/category/gabinete"
-                  style={() => ({
-                    color: "#fff",
-                    textDecoration: "none",
-                  })}
-                >
-                  <Typography textAlign="center">Gabinetes</Typography>
-                </NavLink>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <NavLink
-                  to="/category/motherboard"
-                  style={() => ({
-                    width: "100%",
-                    color: "#fff",
-                    textDecoration: "none",
-                  })}
-                >
-                  <Typography textAlign="center">Motherboards</Typography>
-                </NavLink>
-              </MenuItem>
-            </Button>
+            <Box sx={{ my: 4, color: "white", display: "flex" }}>
+              {categories.map(({ name, section }) => (
+                <MenuItem onClick={handleCloseNavMenu} sx={{ m: "0", p: "0" }}>
+                  <NavLink
+                    to={`/category/${section}`}
+                    style={() => ({
+                      width: "100%",
+                      color: "#fff",
+                      textDecoration: "none",
+                    })}
+                  >
+                    <Typography textAlign="center" mx="15px">
+                      {name}
+                    </Typography>
+                  </NavLink>
+                </MenuItem>
+              ))}
+            </Box>
           </Box>
           <CartWidget />
           <Box sx={{ flexGrow: 0 }}>
@@ -247,5 +217,4 @@ const NavBar = () => {
       </Container>
     </AppBar>
   );
-};
-export default NavBar;
+}

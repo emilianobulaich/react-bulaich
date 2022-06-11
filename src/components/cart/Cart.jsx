@@ -46,8 +46,7 @@ const columns = [
 ];
 
 export default function Cart() {
-  const { productosAgregados, removeItem, clear, totalPrice } =
-    useContext(CartContext);
+  const { cart, removeItem, clear, totalPrice } = useContext(CartContext);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -69,8 +68,8 @@ export default function Cart() {
   };
 
   return (
-    <>
-      {productosAgregados.length > 0 ? (
+    <Box minHeight="70vh">
+      {cart.length > 0 ? (
         <>
           <Paper
             sx={{
@@ -97,7 +96,7 @@ export default function Cart() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {productosAgregados
+                  {cart
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
                       return (
@@ -181,7 +180,7 @@ export default function Cart() {
               <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={productosAgregados.length}
+                count={cart.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -213,6 +212,6 @@ export default function Cart() {
           </Stack>
         </>
       )}
-    </>
+    </Box>
   );
 }

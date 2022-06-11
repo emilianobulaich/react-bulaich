@@ -11,7 +11,7 @@ import {
 
 import { db } from "./db";
 
-export const getProducts = async (categoryId = null) => {
+export const getProducts = async (categoryId) => {
   let q;
   if (categoryId) {
     q = query(collection(db, "products"), where("category", "==", categoryId));
@@ -31,7 +31,7 @@ export const getProducts = async (categoryId = null) => {
 };
 
 export const getProduct = async (id) => {
-  const order = doc(db, "orders", id);
+  const order = doc(db, "products", id);
   try {
     const snapshot = await getDoc(order);
     if (snapshot.exists()) {
@@ -43,7 +43,7 @@ export const getProduct = async (id) => {
   }
 };
 
-export const SaveOrder = async (order) => {
+export const saveOrder = async (order) => {
   const coleccion = collection(db, "orders");
   try {
     const { id } = await addDoc(coleccion, order);
@@ -52,18 +52,24 @@ export const SaveOrder = async (order) => {
     console.log("Error:", err);
   }
 };
-export const updateStock = async (productosCarritos) => {
-  productosCarritos.items.map((item) => {
+export const updateStocks = (order) => {
+  order.items.map((item) => {
     return updateDoc(doc(db, "products", item.id), {
       stock: item.stock - item.quantity,
     });
   });
 };
-/* productosCarritos.items.map((item) => {
-    return updateDoc(doc(db, "products", item.id), {
-      stock: item.stock - item.quantity,
-    });
-  }); */
 
-/* activeLoading();
-  clear(); */
+export const getCategories = async () => {
+  const coleccion = collection(db, "categories");
+  try {
+    const snapshot = await getDocs(coleccion);
+    const categories = snapshot.docs.map((category) => ({
+      id: category.id,
+      ...category.data(),
+    }));
+    return categories;
+  } catch (err) {
+    console.log("Error: ", err);
+  }
+};
