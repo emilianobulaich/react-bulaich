@@ -13,6 +13,7 @@ export default function Checkout() {
   const [error, setError] = useState(false);
   const [orderId, setOrderId] = useState(undefined);
   const [newOrder, setNewOrder] = useState(undefined);
+  const [newTotalPrice, setNewTotalPrice] = useState(undefined);
 
   const addOrder = async (order) => {
     setLoading(true);
@@ -21,7 +22,7 @@ export default function Checkout() {
       setOrderId(id);
       updateStocks(order);
       setNewOrder(order);
-
+      setNewTotalPrice(totalPrice);
       clear();
     } else {
       setError(true);
@@ -55,7 +56,7 @@ export default function Checkout() {
                   </p>
                 ))}
                 <h2>Total:</h2>
-                <p>${totalPrice}</p>
+                <p>${newTotalPrice}</p>
               </Paper>
 
               <Button

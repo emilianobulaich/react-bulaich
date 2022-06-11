@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { Stack, Alert } from "@mui/material";
-
+import { updateStocks } from "../../firebase/requests";
 export const CartContext = createContext(undefined);
 
 export default function CartProvider({ children }) {
@@ -26,28 +26,44 @@ export default function CartProvider({ children }) {
     }
   };
   const addItem = (item, cantidad) => {
-    if (isInCart(item.id)) {
-      if (item.quantity + cantidad <= item.stock) {
-        item.quantity += cantidad;
+    let newItem = isInCart(item.id);
+
+    if (newItem !== -1) {
+      if (cart[newItem].quantity + cantidad <= item.stock) {
         setTotalQuantityLocalStorage(totalQuantity + cantidad);
         setTotalQuantity(totalQuantity + cantidad);
-        setCart([...cart]);
-        setCartLocalStorage([...cart]);
-        setTotalPriceLocalStorage(item.price * item.quantity);
-        setTotalPrice(item.price * item.quantity);
+        let newCart = [...cart];
+        newCart[newItem].quantity += cantidad;
+
+        setCart([...newCart]);
+        setCartLocalStorage([...newCart]);
+        setTotalPriceLocalStorage(
+          newCart[newItem].price * newCart[newItem].quantity
+        );
+        setTotalPrice(newCart[newItem].price * newCart[newItem].quantity);
+        updateStocks(newCart);
       } else {
         <Stack sx={{ width: "100%" }}>
           <Alert severity="error">"Stock insuficiente!"</Alert>
         </Stack>;
       }
     } else {
+      console.log("else");
       item.quantity = cantidad;
       setCartLocalStorage([...cart, item]);
       setCart([...cart, item]);
       setTotalQuantityLocalStorage(totalQuantity + item.quantity);
       setTotalQuantity(totalQuantity + item.quantity);
+
       setTotalPriceLocalStorage(item.price * item.quantity + totalPrice);
+
+      console.log("precio: ", item.price);
+
+      console.log("cantidad: ", item.quantity);
+
       setTotalPrice(item.price * item.quantity + totalPrice);
+
+      console.log(totalPrice);
     }
   };
 
@@ -69,11 +85,14 @@ export default function CartProvider({ children }) {
     setCartLocalStorage([]);
     setTotalQuantity(0);
     setTotalQuantityLocalStorage(0);
+    setTotalPrice(0);
     setTotalPriceLocalStorage(0);
   };
 
   const isInCart = (itemId) => {
-    return cart.find((e) => e.id === itemId);
+    let item = cart.find((e) => e.id === itemId);
+
+    return cart.indexOf(item);
   };
 
   const setCartLocalStorage = (cart) => {

@@ -145,7 +145,7 @@ export default function ItemDetail({ item }) {
           </Typography>
 
           <Typography variant="body1" color="text.secondary">
-            {console.log(item)}
+            {/* {console.log(item)} */}
             {item.description.map((description) => (
               <li key={description}>{description}</li>
             ))}
