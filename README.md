@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+#Zono!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descripción
 
-## Available Scripts
+El sitio web encontrado en este repositorio fue realizado durante el curso de `React JS` de` Coderhouse`.
+Este sitio web es un Ecommerce donde se pueden visualizar productos pudiendo filtrar por categorías a través de la barra de navegación o en su defecto visualizar todos los productos disponibles en el inicio.
 
-In the project directory, you can run:
+Para acceder al sitio debemos entrar en: https://react-bulaich.web.app/
 
-### `npm start`
+##Tecnologías utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [ReactJS](https://es.reactjs.org/)
+- [React Router](https://reactrouter.com/)
+- [Material UI](https://mui.com/)
+- [Firebase](https://firebase.google.com/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+##Instalación
+El proyecto puede descargarse a través del .zip o bien crear una carpeta, abrir una consola de comandos dentro e ingresar lo siguiente:
 
-### `npm test`
+    git clone https://github.com/emilianobulaich/react-bulaich.git
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##Ejecución
+_Antes de poder visualizar el proyecto se deben instalar las dependencias, para ello ingresaremos a la carpeta del proyecto (react-bulaich) y ejecutaremos el siguiente comando:_
 
-### `npm run build`
+    npm install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+####Requerimientos
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Para poder dar uso de este Ecommerce se necesita crear una base de datos en Firebase la cual debe incluir 2 colecciones: `products` y `categories`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Adicionalmente a estas 2 colecciones se creará (al momento de realizarse una orden ) una colección más llamada `orders`, la cual contendrá cada orden realizada.
 
-### `npm run eject`
+**Puede usar los siguientes ejemplos para crear sus productos y categorías**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    product = {
+      category: "procesador",
+      description: ["Marca : AMD", "Modelo : 5500","GPU integrado : No","Cantidad de núcleos de CPU : 6"],
+      pictureUrl: "https://mexx-img-2019.s3.amazonaws.com/Procesador-Amd-Ryzen-5-5500_42560_1.jpeg",
+      price: 24549,
+      stock: 78,
+      title: "Procesador Amd Ryzen 5 5500 4.2 Ghz - AM4 Sin Gpu",
+    }
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    category = {
+       name: "PROCESADOR",
+       section: "procesador"
+    }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+_Una vez instaladas las dependencias, y creada la base de datos en `Firebase` con sus respectivas **colecciones** ejecutaremos el proyecto con:_
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    npm start
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+##Información adicional
 
-### Code Splitting
+####MaterialUI
+Este proyecto fue realizado utilizando la librería `MaterialUI` para el diseño del mismo.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Elegí `MaterialUI` porque era una librería que yo no conocía y por lo tanto nunca había implementado, con el fin de salir de mi zona de confort me puse a prueba implementando esta librería _nueva_ para mi en ese momento y los resultados fueron excelentes.
 
-### Analyzing the Bundle Size
+####Firebase
+A través de `Firebase` se logró guardar la información de las colecciones anteriormente mencionadas:
+`products` ,`categories` y `orders` de forma muy sencilla.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+####LocalStorage
+Para complementar con la base de datos en Firebase, utilicé el `LocalStorage` propio del navegador para guardar los productos almacenados en el **carrito**, la **cantidad total** y el **precio total** a pagar y de esta forma no perder la información al reiniciar o cerrar la pestaña.
