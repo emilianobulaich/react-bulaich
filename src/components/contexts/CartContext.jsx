@@ -48,7 +48,6 @@ export default function CartProvider({ children }) {
         </Stack>;
       }
     } else {
-      console.log("else");
       item.quantity = cantidad;
       setCartLocalStorage([...cart, item]);
       setCart([...cart, item]);
@@ -57,13 +56,7 @@ export default function CartProvider({ children }) {
 
       setTotalPriceLocalStorage(item.price * item.quantity + totalPrice);
 
-      console.log("precio: ", item.price);
-
-      console.log("cantidad: ", item.quantity);
-
       setTotalPrice(item.price * item.quantity + totalPrice);
-
-      console.log(totalPrice);
     }
   };
 
